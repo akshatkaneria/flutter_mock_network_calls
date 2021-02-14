@@ -13,7 +13,9 @@ void main() {
   setUp(() {
     dioAdapterMock = DioAdapterMock();
   });
+
   testWidgets('Test-1', (WidgetTester tester) async {
+    /// create a http response that will be returned when an API is called
     var data = {'message': 'This message has been fetched from mock API-1.'};
 
     final responsepayload = jsonEncode(data);
@@ -26,6 +28,9 @@ void main() {
       },
     );
 
+    /// mock API with the http response created above
+    /// [when] is used for mocking API and it will mock
+    /// any next API call for once
     when(dioAdapterMock.fetch(any, any, any))
         .thenAnswer((_) async => httpResponse);
 
@@ -53,6 +58,7 @@ void main() {
         findsOneWidget);
   });
 
+  /// mocking multiple different API calls
   testWidgets('Test-2', (WidgetTester tester) async {
     var data1 = {'message': 'Message from mock API-1'};
 
@@ -66,6 +72,8 @@ void main() {
       },
     );
 
+    /// here we mock the API with [path] as 'data1' and return the response that we created above
+    /// This is helpful when you have multiple API calls and want to get different responses for different APIs
     when(dioAdapterMock.fetch(
             argThat(
               isA<RequestOptions>().having(
@@ -78,6 +86,7 @@ void main() {
             any))
         .thenAnswer((_) async => httpResponse1);
 
+    /// As above, create a mock response for the second API and mock the API-2 using [path]
     var data2 = {'message': 'Message from mock API-2'};
 
     final responsepayload2 = jsonEncode(data2);
@@ -90,6 +99,7 @@ void main() {
       },
     );
 
+    /// use the httpResponse2 defined above for mocking the API-2 using [path]
     when(dioAdapterMock.fetch(
             argThat(
               isA<RequestOptions>().having(

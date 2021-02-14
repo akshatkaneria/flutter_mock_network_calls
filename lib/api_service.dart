@@ -7,6 +7,9 @@ class ApiService {
   static Dio getDioClient() {
     Dio dio = Dio();
 
+    /// If the network call is from any of tests, then use [DioAdapterMock]
+    /// instead of the Default [HttpClientAdapter] of Dio so that the
+    /// mock response is returned and real network call is avoided
     if (Platform.environment.containsKey('FLUTTER_TEST')) {
       print('RUNNING IN TEST ENV');
       dio.httpClientAdapter = DioAdapterMock();
