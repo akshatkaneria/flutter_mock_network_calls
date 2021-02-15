@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_mock_network_calls/dio_adapter_mock.dart';
 
 class ApiService {
+  static String baseUrl = 'http://demo7683289.mockable.io/';
+
   static Dio getDioClient() {
     Dio dio = Dio();
 
@@ -15,7 +17,7 @@ class ApiService {
       dio.httpClientAdapter = DioAdapterMock();
     }
 
-    dio.options.baseUrl = 'http://demo7683289.mockable.io/';
+    dio.options.baseUrl = baseUrl;
     dio.options.connectTimeout = 20000;
     dio.options.receiveTimeout = 20000;
 
