@@ -28,9 +28,10 @@ void main() {
       },
     );
 
-    /// mock API with the http response created above
-    /// [when] is used for mocking API and it will mock
-    /// any next API call for once
+    /// [when] is used for mocking API to return the http response created above
+    /// It will mock any next API call for once
+    /// Here, we mock the API for any requestOptions, requestStream and cancelFuture 
+    /// which are the parameters of the fetch method which is used to make an API request.
     when(dioAdapterMock.fetch(any, any, any))
         .thenAnswer((_) async => httpResponse);
 
